@@ -103,9 +103,9 @@ def index():
         height=800,
         scene=dict(
             aspectmode='data',
-            xaxis_title='X',
-            yaxis_title='Y',
-            zaxis_title='Z',
+            xaxis=dict(title='X', range=[0, df['X_norm'].max() + 10]),
+            yaxis=dict(title='Y', range=[0, df['Y_norm'].max() + 10]),
+            zaxis=dict(title='Z', range=[0, df['Z_norm'].max() + 10]),
             camera=dict(eye=dict(x=1.5, y=1.5, z=1))
         )
     )
