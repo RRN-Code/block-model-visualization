@@ -18,7 +18,7 @@ def index():
     400020, 3700010, 1210, 10, 10, 10, L, 0, 0.15, 0.08, 2.70
     400030, 3700010, 1210, 10, 10, 10, S, 1, 1.05, 0.40, 2.65"""
 
-    df = pd.read_csv(pd.compat.StringIO(data_str), sep=',', skipinitialspace=True)
+    df = pd.read_csv(io.StringIO(data_str), sep=',', skipinitialspace=True)
     df['X_norm'] = df['X'] - df['X'].min()
     df['Y_norm'] = df['Y'] - df['Y'].min()
     df['Z_norm'] = df['Z'] - df['Z'].min()
