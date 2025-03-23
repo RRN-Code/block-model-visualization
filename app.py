@@ -93,12 +93,15 @@ def index():
 
     html = fig.to_html(full_html=False)
     return render_template_string("""
-    {% raw %}
     <html>
-    <head><title>3D Block Model</title></head>
-    <body>{{ html_content | safe }}</body>
+    <head>
+        <title>3D Block Model</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        {{ html_content | safe }}
+    </body>
     </html>
-    {% endraw %}
     """, html_content=html)
 
 if __name__ == '__main__':
