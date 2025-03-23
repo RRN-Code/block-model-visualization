@@ -92,14 +92,14 @@ def index():
     )
 
     html = fig.to_html(full_html=False)
-    return render_template_string(f"""
+    return render_template_string("""
     {% raw %}
     <html>
     <head><title>3D Block Model</title></head>
-    <body>{html}</body>
+    <body>{{ html_content | safe }}</body>
     </html>
     {% endraw %}
-    """)
+    """, html_content=html)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
