@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # Your existing code (trimmed for clarity)
+    # Sample block model data
     data_str = """X, Y, Z, DX, DY, DZ, Rock_Type, Ore_Flag, Au_Grade, Cu_Grade, Density
     400000, 3700000, 1200, 10, 10, 10, S, 1, 1.25, 0.45, 2.65
     400010, 3700000, 1200, 10, 10, 10, L, 0, 0.02, 0.01, 2.70
@@ -43,7 +43,12 @@ def index():
             [0, 3, 7], [0, 7, 4],
             [1, 2, 6], [1, 6, 5]
         ]
-        return vertices, triangles
+        edges = [
+            [0, 1], [1, 2], [2, 3], [3, 0],  # Bottom face
+            [4, 5], [5, 6], [6, 7], [7, 4],  # Top face
+            [0, 4], [1, 5], [2, 6], [3, 7]   # Vertical edges
+        ]
+        return vertices, triangles, edges
 
     fig = go.Figure()
 
@@ -60,8 +65,9 @@ def index():
             'lightgreen'
         )
 
-        vertices, triangles = create_cube(x, y, z, dx, dy, dz)
+        vertices, triangles, edges = create_cube(x, y, z, dx, dy, dz)
 
+        # Add cube mesh
         fig.add_trace(go.Mesh3d(
             x=vertices[:, 0],
             y=vertices[:, 1],
@@ -74,6 +80,19 @@ def index():
             hovertext=f"Block {index}<br>Rock: {rock_type}<br>Ore: {'Yes' if ore_flag==1 else 'No'}",
             name=f"Block {index}"
         ))
+
+        # Add visible gray edges
+        for edge in edges:
+            start, end = edge
+            fig.add_trace(go.Scatter3d(
+                x=[vertices[start, 0], vertices[end, 0]],
+                y=[vertices[start, 1], vertices[end, 1]],
+                z=[vertices[start, 2], vertices[end, 2]],
+                mode='lines',
+                line=dict(color='gray', width=2),
+                showlegend=False,
+                hoverinfo='none'
+            ))
 
     fig.update_layout(
         title={
