@@ -2,6 +2,7 @@ from flask import Flask, render_template_string
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+import io
 
 app = Flask(__name__)
 
